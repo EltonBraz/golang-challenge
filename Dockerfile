@@ -1,8 +1,8 @@
 FROM golang:1.14.0-alpine as builder
 WORKDIR /app
 COPY app.go .
-# RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
-RUN CGO_ENABLED=0 go build -o app
+RUN go build -o app -a -ldflags='-w -s -extldflags "-static"' . 
+
 
 FROM scratch
 WORKDIR /app
